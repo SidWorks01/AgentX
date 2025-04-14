@@ -1,32 +1,44 @@
+#main.py
+
 from agentpro import AgentPro
 from agentpro.tools import AresInternetTool, CodeEngine, YouTubeSearchTool, SlideGenerationTool
 import os
 import dotenv
 
 def main():
-    # Load environment variables from .env file if it exists
     dotenv.load_dotenv()
-    
+ 
+    use_openrouter = os.getenv("OPENROUTER_API_KEY") is not None
+
+    if use_openrouter:
+        print('Using OpenRouter API')
+        client_details = {
+            "api_key": os.getenv("OPENROUTER_API_KEY"),
+            "api_base": "https://openrouter.ai/api/v1",
+            "MODEL": os.getenv("MODEL_NAME"),
+            "api_type": "openrouter"
+        }
+    else:
     # Check for required API keys
-    if not os.environ.get("OPENAI_API_KEY"):
-        print("Error: OPENAI_API_KEY environment variable is not set.")
-        print("Please set it before running the agent.")
-        return
+        if not os.environ.get("OPENAI_API_KEY"):
+            print("Error: OPENAI_API_KEY environment variable is not set.")
+            print("Please set it before running the agent.")
+            return
         
     if not os.environ.get("TRAVERSAAL_ARES_API_KEY"):
         print("Warning: TRAVERSAAL_ARES_API_KEY environment variable is not set.")
         print("AresInternetTool will not be available.")
-        tools = [CodeEngine(), YouTubeSearchTool(), SlideGenerationTool()]
+        tools = [CodeEngine(client_details), YouTubeSearchTool(client_details=client_details), SlideGenerationTool(client_details=client_details)]
     else:
         tools = [
             AresInternetTool(),
-            CodeEngine(), 
-            YouTubeSearchTool(), 
-            SlideGenerationTool()
+            CodeEngine(client_details), 
+            YouTubeSearchTool(client_details), 
+            SlideGenerationTool(client_details=client_details)
         ]
     
     # Create agent with tools
-    agent = AgentPro(tools=tools)
+    agent = AgentPro(tools=tools, client_details=client_details if use_openrouter else None)
     
     print("AgentPro is initialized and ready. Enter 'quit' to exit.")
     print("Available tools:")
@@ -45,4 +57,5 @@ def main():
             print(f"Error: {e}")
 
 if __name__ == "__main__":
+    print("Starting AgentPro...")
     main()

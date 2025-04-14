@@ -20,7 +20,7 @@ class AresInternetTool(Tool):
                 raise ValueError("TRAVERSAAL_ARES_API_KEY environment variable not set")
 
     def run(self, prompt: str) -> str:
-        print(f"Calling Ares Internet Search Tool with prompt: {prompt}")
+        print(f"🛠️ Calling Ares Internet Search Tool with prompt: {prompt}")
         payload = {"query": [prompt]}
         response = requests.post(self.url, json=payload, headers={
             "x-api-key": self.x_api_key,

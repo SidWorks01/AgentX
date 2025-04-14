@@ -3,6 +3,7 @@ from duckduckgo_search import DDGS
 from urllib.parse import urlparse, parse_qs
 from .base import LLMTool
 from typing import Any
+
 class YouTubeSearchTool(LLMTool):
     name: str = "YouTube Search Tool"
     description: str = "A tool capable of searching the internet for youtube videos and returns the text transcript of the videos"
@@ -10,8 +11,8 @@ class YouTubeSearchTool(LLMTool):
     # Specific Parameters
     ddgs: Any = None
     
-    def __init__(self, **data):
-        super().__init__(**data)
+    def __init__(self, client_details: dict = None, **data):
+        super().__init__(client_details=client_details, **data)
         if self.ddgs is None:
             self.ddgs = DDGS()
 
@@ -88,7 +89,7 @@ class YouTubeSearchTool(LLMTool):
 
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model=self.model,
                 messages=[
                     {"role": "system", "content": "You are an expert content creator specializing in creating high-quality content from video transcripts."},
                     {"role": "user", "content": f"{prompt}\n\nTranscript:\n{transcript}"}

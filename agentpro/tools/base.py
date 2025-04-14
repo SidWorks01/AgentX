@@ -1,3 +1,5 @@
+# agentpro\tools\base.py
+
 from typing import Any
 from abc import ABC, abstractmethod
 from pydantic import BaseModel, ConfigDict
@@ -23,11 +25,19 @@ class Tool(ABC, BaseModel):
 
 class LLMTool(Tool):
     client: Any = None
+    model: str = "gpt-4o-mini"
     
-    def __init__(self, **data):
+    def __init__(self, client_details: dict=None, **data):
         super().__init__(**data)
-        if self.client is None:
+        if client_details:
+            self.client = OpenAI(
+                api_key=client_details.get("api_key"),
+                base_url=client_details.get("api_base"),
+            )
+            self.model = client_details.get("MODEL")
+        else:
             api_key = os.environ.get("OPENAI_API_KEY")
             if not api_key:
                 raise ValueError("OPENAI_API_KEY environment variable not set")
             self.client = OpenAI(api_key=api_key)
+            # self.model = "gpt-4o-mini"

@@ -25,9 +25,17 @@ Begin!
 """
 
 class AgentPro:
-    def __init__(self, llm = None, tools: List[Tool] = [], system_prompt: str = None, react_prompt: str = REACT_AGENT_SYSTEM_PROMPT):
+    def __init__(self, llm = None, tools: List[Tool] = [], system_prompt: str = None, react_prompt: str = REACT_AGENT_SYSTEM_PROMPT, client_details: Dict = None):
         super().__init__()
-        self.client = llm if llm else OpenAI()
+        if client_details:
+            self.client = OpenAI(
+                api_key=client_details.get("api_key"),
+                base_url=client_details.get("api_base"),
+            )
+            self.model = client_details.get("MODEL")
+        else:
+            self.client = llm if llm else OpenAI()
+            self.model = 'gpt-4o-mini'
         self.tools = self.format_tools(tools)
         self.react_prompt = react_prompt.format(
             tools="\n\n".join(map(lambda tool: tool.get_tool_description(), tools)),
@@ -97,11 +105,16 @@ class AgentPro:
         )
         response = ""
         while True:
+
             response = self.client.chat.completions.create(
-                    model="gpt-4o-mini",
+                    model=self.model,
                     messages=self.messages,
                     max_tokens=8000
                 ).choices[0].message.content.strip()
+            
+            if not response:
+                print("Error: Empty response from model.")
+
             self.messages.append({"role":"assistant", "content": response})
             print("="*80)
             print(response)
@@ -113,3 +126,4 @@ class AgentPro:
                 self.messages.append(
                     {"role": "assistant", "content": observation}
                 )
+            

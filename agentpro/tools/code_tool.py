@@ -1,3 +1,5 @@
+# agentpro\tools\code_tool.py
+
 import re
 import subprocess
 import sys
@@ -8,6 +10,9 @@ class CodeEngine(LLMTool):
     description: str = "A coding tool that can take a prompt and generate executable Python code. It parses and executes the code. Returns the code and the error if the code execution fails."
     arg: str = "A single string parameter describing the coding task."
 
+    def __init__(self, client_details: dict = None, **data):
+        super().__init__(client_details=client_details, **data)
+    
     def parse_and_exec_code(self, response: str):
         result = re.search(r'```python\s*([\s\S]*?)\s*```', response)
         if not result:
@@ -38,7 +43,7 @@ class CodeEngine(LLMTool):
 
     def generate_code(self, prompt):
         response = self.client.chat.completions.create(
-            model="gpt-4o",
+            model=self.model,
             messages=[
                 {"role": "system", "content": "You are a Python code generator. Respond only with executable Python code, no explanations or comments except for required pip installations at the top. Return the code within ```python and ``` strings. The first line should be commented out pip install statement"},
                 {"role": "user", "content": f"Generate Python code to {prompt}. If you need to use any external libraries, include a comment at the top of the code listing the required pip installations."}
