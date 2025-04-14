@@ -30,6 +30,8 @@ pip install -r requirements.txt
 
 ### Configuration
 
+For Openrouter:
+
 Create a `.env` file in the root directory with your API keys:
 
 ```
@@ -38,6 +40,15 @@ OPENROUTER_API_KEY=your_openrouter_api_key
 MODEL_NAME=your_choice_of_openrouter_model_id
 ```
 
+For OpenAI:
+
+Create a `.env` file in the root directory with your API keys:
+
+```
+TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
+OPENAI_API_KEY=your_openai_api_key
+MODEL_NAME=your_choice_of_openai_model_id
+```
 ### Running the Agent
 
 From the command line:
