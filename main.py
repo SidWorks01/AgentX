@@ -19,11 +19,17 @@ def main():
             "api_type": "openrouter"
         }
     else:
-    # Check for required API keys
         if not os.environ.get("OPENAI_API_KEY"):
             print("Error: OPENAI_API_KEY environment variable is not set.")
             print("Please set it before running the agent.")
             return
+        
+        client_details = {
+            "api_key": os.getenv("OPENAI_API_KEY"),
+            "api_base": "https://api.openai.com/v1/",
+            "MODEL": os.getenv("MODEL_NAME"),
+            "api_type": "openai"
+        }
         
     if not os.environ.get("TRAVERSAAL_ARES_API_KEY"):
         print("Warning: TRAVERSAAL_ARES_API_KEY environment variable is not set.")
@@ -37,7 +43,6 @@ def main():
             SlideGenerationTool(client_details=client_details)
         ]
     
-    # Create agent with tools
     agent = AgentPro(tools=tools, client_details=client_details if use_openrouter else None)
     
     print("AgentPro is initialized and ready. Enter 'quit' to exit.")
