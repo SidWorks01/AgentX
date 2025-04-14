@@ -119,11 +119,12 @@ class AgentPro:
             print("="*80)
             print(response)
             print("="*80)
-            if "Final Answer" in response:
-                return response.split("Final Answer:")[-1].strip()
+
             if "Action" in response and "Action Input" in response:
                 observation = self.tool_call(response)
                 self.messages.append(
                     {"role": "assistant", "content": observation}
                 )
+            if "Final Answer" in response:
+                return response.split("Final Answer:")[-1].strip()
             
