@@ -1,5 +1,3 @@
-#main.py
-
 from agentpro import AgentPro
 from agentpro.tools import AresInternetTool, CodeEngine, YouTubeSearchTool, SlideGenerationTool
 import os

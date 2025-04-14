@@ -33,7 +33,6 @@ pip install -r requirements.txt
 Create a `.env` file in the root directory with your API keys:
 
 ```
-OPENAI_API_KEY=your_openai_api_key
 TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
 OPENROUTER_API_KEY=your_openrouter_api_key
 MODEL_NAME=your_choice_of_openrouter_model_id
