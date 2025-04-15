@@ -1,8 +1,6 @@
 from agentpro import AgentPro, ares_tool, youtube_tool
 from agentpro.tools import AresInternetTool, CodeEngine, YouTubeSearchTool, SlideGenerationTool, NoteManager, PlannerTool
-from agentpro.tools.base import Tool
 from sentence_transformers import SentenceTransformer
-from typing import List, Any
 import numpy as np
 import faiss
 import os

@@ -5,7 +5,6 @@ from typing import List, Any
 import numpy as np
 import faiss
 
-# FAISS-based vector database
 class FAISSVectorDB:
     def __init__(self, index, note_store):
         self.index = index
@@ -23,7 +22,6 @@ class FAISSVectorDB:
                 })
         return results
 
-# NoteManager with YouTube ingestion and summarization
 class NoteManager(Tool):
     name: str = "note_manager"
     description: str = (

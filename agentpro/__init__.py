@@ -1,5 +1,4 @@
 from .agent import AgentPro
-from typing import Any
 from agentpro.tools import AresInternetTool, CodeEngine, YouTubeSearchTool, SlideGenerationTool, PlannerTool , NoteManager # add more tools when available
 ares_tool = AresInternetTool()
 code_tool = CodeEngine()

@@ -1,7 +1,6 @@
 from openai import OpenAI
 from typing import List, Dict
 import json
-import os
 import re
 from .tools.base import Tool
 import time
