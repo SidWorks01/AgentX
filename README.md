@@ -104,7 +104,7 @@ graph TD
   B --> C1[Learning Plan via ares_tool]
   B --> C2[YouTube Recommendations via youtube_tool]
   B --> C3[Summarization via ares_tool + slide_tool]
-  B --> SubAgent[Delegates to Sub-Agent (AgentPro)]
+  B --> SubAgent[Delegates to Sub-Agent - AgentPro]
   
   D[Note Manager Tool] -->|Query| F[FAISS Vector DB]
   F -->|Top Note| D
