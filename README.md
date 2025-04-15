@@ -45,38 +45,43 @@ Utilize different models from the OpenRouter platform or default to OpenAI model
 
 ## Quick Start
 
-### Installation
+### ⚙️ Installation
 
-Clone the repository and install the required packages:
+1. Clone the repository and install the required packages:
 
 ```bash
-git clone https://github.com/yourusername/agentpro.git
-cd agentpro
+git clone [https://github.com/yourusername/agentpro.git](https://github.com/SidWorks01/Traversaal-x-Optimized-AI-Hackathon.git)
+cd Traversaal-x-Optimized-AI-Hackathon
+```
+
+2. Create a Virtual Environment & Install Dependencies:
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### Configuration
+3. Configuration
+You will need API keys for:
+  - OpenRouter or OpenAI
+  - Traversaal API key for ares_tool
 
-For Openrouter:
-
-Create a `.env` file in the root directory with your API keys:
-
-```
+  Create a `.env` file in the root directory with your API keys:
+  For OpenRouter:
+  ```
 TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
 OPENROUTER_API_KEY=your_openrouter_api_key
 MODEL_NAME=your_choice_of_openrouter_model_id
 ```
+  For OpenAI:
+  ```
+  TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
+  OPENAI_API_KEY=your_openai_api_key
+  MODEL_NAME=your_choice_of_openai_model_id
+  ```
 
-For OpenAI:
-
-Create a `.env` file in the root directory with your API keys:
-
-```
-TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
-OPENAI_API_KEY=your_openai_api_key
-MODEL_NAME=your_choice_of_openai_model_id
-```
-### Running the Agent
+### 🚀 Running the Agent
 
 From the command line:
 
@@ -86,20 +91,28 @@ python main.py
 
 This starts an interactive session with the agent where you can enter queries.
 
-### Basic Usage
+## Basic Usage
 
 ```python
-from agentpro import AgentPro, ares_tool, code_tool, youtube_tool
-agent = AgentPro(tools=[ares_tool, code_tool, youtube_tool])
-
-# Run a query
-response = agent("Generate a summary on the latest AI advancements")
-print(response)
+plan deep learning
 ```
 
-## 🌍 Traversaal x Optimized AI Hackathon 2025
+## 🧩 Architecture Diagram
+```mermaid
+graph TD
+  A[User Input] --> B[Teacher Agent Tool]
+  B --> C1[Learning Plan via ares_tool]
+  B --> C2[YouTube Recommendations via youtube_tool]
+  B --> C3[Summarization via ares_tool + slide_tool]
+  B --> SubAgent[Delegates to Sub-Agent - AgentPro]
+  
+  D[Note Manager Tool] -->|Query| F[FAISS Vector DB]
+  F -->|Top Note| D
+  D --> G[Summarize with ares_tool]
 
-We’re teaming up with the **Optimized AI Conference 2025** to host a **global hackathon on AI Agents** — open to all developers, builders, researchers, and dreamers working on intelligent systems.
+  D -->|Ingest from YT| YT[youtube_tool]
+  YT -->|Transcript| F
+```
 
 ### The Challenge
 
