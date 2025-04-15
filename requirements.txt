@@ -19,3 +19,4 @@ sentence-transformers
 faiss-cpu 
 requests 
 beautifulsoup4
+gradio>=4.0.0
