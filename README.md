@@ -81,6 +81,13 @@ MODEL_NAME=your_choice_of_openrouter_model_id
   MODEL_NAME=your_choice_of_openai_model_id
   ```
 
+### Launch the gradio app
+
+From the command line :
+
+```bash
+./launch_gradio.sh
+```
 ### 🚀 Running the Agent
 
 From the command line:
