@@ -49,7 +49,7 @@ class CodeEngine(LLMTool):
                 {"role": "user", "content": f"Generate Python code to {prompt}. If you need to use any external libraries, include a comment at the top of the code listing the required pip installations."}
             ],
             max_tokens=4000,
-            temperature=0.7
+            temperature=0.01
         )
         response = response.choices[0].message.content
         code, error = self.parse_and_exec_code(response)
