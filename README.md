@@ -16,21 +16,32 @@ Welcome to **Teacher Agent**, a smart AI-driven learning assistant built using t
 
 ## ✨ Features
 
-### 🎓 Teacher Agent Tool
+### 🎓 Planner Tool
 Acts as your tutor:
 - planned deep learning: Breaks broad topics into structured, digestible subtopics.
-- recommend videos: Finds and suggests relevant YouTube videos.
-- summarize notes: Summarizes web/YT content into concise notes.
+- recommend videos: Find and suggest relevant YouTube videos.
+- summarize notes: Summarize web/YT content into concise notes.
 
 ### 📝 Note Manager Tool
 Enhances your note-taking experience:
-- stores your personal notes and YouTube transcripts.
+- stores your notes and YouTube transcripts.
 - Lets you search, retrieve, and summarize notes contextually.
 
 ### 🔓 OpenRouter API
 Utilize different models from the OpenRouter platform or default to OpenAI models.
 
+## 🛠️ Tech Stack & Agent Architecture
 
+- **LLM Gateway**: OpenRouter + OpenAI (via AgentPro)
+- **Framework**: AgentPro – multi-agent orchestration
+- **Tools Used**:
+    - ares_tool – web search and summarization
+    - youtube_tool – fetch and transcribe YouTube videos
+    - slide_tool – structured slide/notes generator
+    - planner_tool - recommends YouTube videos, summarizes content, plans learning paths, and helps make study notes for any topic.
+    - note_manager_tool - search and summarize top relevant notes from YouTube or stored data.
+- **Vector DB**: FAISS (for storing and retrieving embedded notes)
+- **Embedding Model**: SentenceTransformers
 
 ## Quick Start
 
