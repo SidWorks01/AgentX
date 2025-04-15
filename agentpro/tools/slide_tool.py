@@ -70,6 +70,10 @@ class SlideGenerationTool(Tool):
                 p.level = 0
                 p.font.size = Pt(20)
 
+                
+        topic_title = slide_content[0]["slide_title"] if slide_content else "Presentation"
+        safe_title = re.sub(r'[^0-9a-zA-Z]+', '_', topic_title)
+        output_path = f"{safe_title}.pptx"
 
         presentation.save(output_path)
         print("Saved to ", output_path)
