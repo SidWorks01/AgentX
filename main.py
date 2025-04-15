@@ -1,9 +1,36 @@
-from agentpro import AgentPro
-from agentpro.tools import AresInternetTool, CodeEngine, YouTubeSearchTool, SlideGenerationTool
+from agentpro import AgentPro, ares_tool, youtube_tool
+from agentpro.tools import AresInternetTool, CodeEngine, YouTubeSearchTool, SlideGenerationTool, NoteManager, PlannerTool
+from agentpro.tools.base import Tool
+from sentence_transformers import SentenceTransformer
+from typing import List, Any
+import numpy as np
+import faiss
 import os
 import dotenv
 
+class FAISSVectorDB:
+    def __init__(self, index, note_store):
+        self.index = index
+        self.note_store = note_store
+
+    def similarity_search(self, query_embedding, k=5):
+        query_vector = np.array(query_embedding).astype("float32").reshape(1, -1)
+        scores, indices = self.index.search(query_vector, k)
+        results = []
+        for i, idx in enumerate(indices[0]):
+            if idx < len(self.note_store):
+                results.append({
+                    "text": self.note_store[idx]["text"],
+                    "score": float(scores[0][i])
+                })
+        return results
+    
 def main():
+    
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+    note_store = []
+    faiss_index = faiss.IndexFlatIP(embedding_model.get_sentence_embedding_dimension())
+    vector_db = FAISSVectorDB(faiss_index, note_store)
     dotenv.load_dotenv()
  
     use_openrouter = os.getenv("OPENROUTER_API_KEY") is not None
@@ -38,7 +65,9 @@ def main():
             AresInternetTool(),
             CodeEngine(client_details), 
             YouTubeSearchTool(client_details), 
-            SlideGenerationTool(client_details=client_details)
+            SlideGenerationTool(client_details=client_details),
+            NoteManager(vector_db=vector_db, embedding_model=embedding_model, youtube_tool=youtube_tool),
+            PlannerTool()
         ]
     
     agent = AgentPro(tools=tools, client_details=client_details if use_openrouter else None)

@@ -4,6 +4,8 @@ from .code_tool import CodeEngine
 from .youtube_tool import YouTubeSearchTool
 from .slide_tool import SlideGenerationTool
 from .data_tool import DataAnalysisTool
+from .note_manager_tool import NoteManager
+from .planner_tool import PlannerTool
 
 __all__ = [
     'Tool',
@@ -12,4 +14,7 @@ __all__ = [
     'YouTubeSearchTool',
     'SlideGenerationTool',
     'DataAnalysisTool',
+    'NoteManager'
+    'PlannerTool'
+
 ]

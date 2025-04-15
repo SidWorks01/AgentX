@@ -14,3 +14,8 @@ pyarrow
 matplotlib
 scikit-learn
 seaborn
+pdfminer.six 
+sentence-transformers 
+faiss-cpu 
+requests 
+beautifulsoup4
