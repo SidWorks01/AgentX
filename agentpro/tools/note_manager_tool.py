@@ -1,68 +1,59 @@
-from agentpro import ares_tool, youtube_tool
+
 from agentpro.tools.base import Tool
-from sentence_transformers import SentenceTransformer
 from typing import List, Any
 import numpy as np
 import faiss
 
+class FAISSVectorDB:
+    def __init__(self, index, note_store):
+        self.index = index
+        self.note_store = note_store
+
+    def similarity_search(self, query_embedding, k=5):
+        if self.index.ntotal == 0:
+            return []
+        query_vector = np.array(query_embedding).astype("float32").reshape(1, -1)
+        scores, indices = self.index.search(query_vector, k)
+        results = []
+        for i, idx in enumerate(indices[0]):
+            if idx < len(self.note_store):
+                results.append({
+                    "text": self.note_store[idx]["text"],
+                    "score": float(scores[0][i])
+                })
+        return results
 
 class NoteManager(Tool):
-
-    note_manager_tool.ingest_youtube_notes("")
-    response = note_manager_tool.run("")
-
-class NoteManagerTool(Tool):
-
-    class FAISSVectorDB:
-        def __init__(self, index, note_store):
-            self.index = index
-            self.note_store = note_store
-
-        def similarity_search(self, query_embedding, k=5):
-            query_vector = np.array(query_embedding).astype("float32").reshape(1, -1)
-            scores, indices = self.index.search(query_vector, k)
-            results = []
-            for i, idx in enumerate(indices[0]):
-                if idx < len(self.note_store):
-                    results.append({
-                        "text": self.note_store[idx]["text"],
-                        "score": float(scores[0][i])
-                    })
-            return results
-        
-    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")  
-    note_store = []  
-    index = faiss.IndexFlatL2(embedding_model.get_sentence_embedding_dimension())
-    vector_db = NoteManager.FAISSVectorDB(index, note_store)
-    note_manager_tool = NoteManager(vector_db, embedding_model, youtube_tool)
-
-
     name: str = "note_manager"
     description: str = (
-        "Searches and summarizes top relevant note from YouTube or stored data."
+        "Create notes. Searches using ares_tool and summarizes top relevant note from YouTube or stored data."
     )
     arg: str = "A question or topic like 'explain transformers'"
 
-    def __init__(self, vector_db: Any, embedding_model: Any, youtube_tool: Any):
+    def __init__(self, vector_db: Any, embedding_model: Any, youtube_tool: Any, ares_tool: Any):
         super().__init__()
+        
         object.__setattr__(self, "vector_db", vector_db)
         object.__setattr__(self, "embedding_model", embedding_model)
         object.__setattr__(self, "youtube_tool", youtube_tool)
+        object.__setattr__(self, "ares_tool", ares_tool)
 
     def run(self, prompt: str) -> str:
         if not prompt.strip():
             return "Please enter a valid query."
-
+        print("FAISS index ntotal:", self.vector_db.index.ntotal)
         query_embedding = self.embed(prompt)
         results = self.vector_db.similarity_search(query_embedding, k=1)
 
         if not results:
-            return "No matching notes found. Try ingesting from YouTube first."
+            result = self.ingest_youtube_notes(prompt)
+            return f"No matching notes found. Ingested from YouTube. {result}. Call again to summarize."
 
         top_note = results[0]["text"]
         try:
-            summary = ares_tool.run(top_note)
-            return f"**Summary of top note:**\n{summary}"
+            summary = self.ares_tool.run(top_note)
+            return f"[FINALIZED NOTES]\n{summary}"
+            # return f"**Summary of top note:**\n{summary}"
         except Exception as e:
             return f"Found a note but summarization failed: {e}"
 
