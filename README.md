@@ -1,20 +1,36 @@
-# AgentPro
+# 🧠 Teacher Agent (Traversaal x Optimized AI Hackathon)
 
-AgentPro is a flexible framework for building AI agents with multiple specialized tools. This repository allows you to create powerful agents that can search the internet, generate code, analyze YouTube videos, create presentations, and more.
+Welcome to **Teacher Agent**, a smart AI-driven learning assistant built using the AgentPro-Ex framework and custom tool. AgentPro-Ex is our extension of the AgentPro framework that adds accessibility by allowing the usage of OpenRouter in addition to OpenAI. The Teacher Agent is your self-sufficient advisor agent who helps develop learning paths for the topics you are interested in. Teacher Agent is capable of:
+
+- Creating structured learning paths,
+- Recommending high-quality educational YouTube videos,
+- Summarizing topics and generating study notes,
+- Searching and managing your notes using embeddings,
+- Creating slides of contents,
+- Integrating multiple AI capabilities under one unified system.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue" alt="Python 3.8+">
   <img src="https://img.shields.io/badge/License-Apache%202.0-blue" alt="License: Apache 2.0">
 </p>
 
-## Features
+## ✨ Features
 
-- 🧠 **Flexible Agent Architecture**: Built on the ReAct framework to combine reasoning and action
-- 🔧 **Modular Tool System**: Easily extend with custom tools
-- 🌐 **Internet Search**: Real-time web search using the Ares API
-- 💻 **Code Generation & Execution**: Generate and run Python code on-the-fly
-- 🎬 **YouTube Analysis**: Search, extract transcripts, and summarize YouTube videos
-- 📊 **Presentation Generation**: Create PowerPoint presentations automatically
+### 🎓 Teacher Agent Tool
+Acts as your tutor:
+- planned deep learning: Breaks broad topics into structured, digestible subtopics.
+- recommend videos: Finds and suggests relevant YouTube videos.
+- summarize notes: Summarizes web/YT content into concise notes.
+
+### 📝 Note Manager Tool
+Enhances your note-taking experience:
+- stores your personal notes and YouTube transcripts.
+- Lets you search, retrieve, and summarize notes contextually.
+
+### 🔓 OpenRouter API
+Utilize different models from the OpenRouter platform or default to OpenAI models.
+
+
 
 ## Quick Start
 
