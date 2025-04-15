@@ -5,24 +5,38 @@ from typing import List, Any
 import numpy as np
 import faiss
 
-class FAISSVectorDB:
-    def __init__(self, index, note_store):
-        self.index = index
-        self.note_store = note_store
-
-    def similarity_search(self, query_embedding, k=5):
-        query_vector = np.array(query_embedding).astype("float32").reshape(1, -1)
-        scores, indices = self.index.search(query_vector, k)
-        results = []
-        for i, idx in enumerate(indices[0]):
-            if idx < len(self.note_store):
-                results.append({
-                    "text": self.note_store[idx]["text"],
-                    "score": float(scores[0][i])
-                })
-        return results
 
 class NoteManager(Tool):
+
+    note_manager_tool.ingest_youtube_notes("")
+    response = note_manager_tool.run("")
+
+class NoteManagerTool(Tool):
+
+    class FAISSVectorDB:
+        def __init__(self, index, note_store):
+            self.index = index
+            self.note_store = note_store
+
+        def similarity_search(self, query_embedding, k=5):
+            query_vector = np.array(query_embedding).astype("float32").reshape(1, -1)
+            scores, indices = self.index.search(query_vector, k)
+            results = []
+            for i, idx in enumerate(indices[0]):
+                if idx < len(self.note_store):
+                    results.append({
+                        "text": self.note_store[idx]["text"],
+                        "score": float(scores[0][i])
+                    })
+            return results
+        
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")  
+    note_store = []  
+    index = faiss.IndexFlatL2(embedding_model.get_sentence_embedding_dimension())
+    vector_db = NoteManager.FAISSVectorDB(index, note_store)
+    note_manager_tool = NoteManager(vector_db, embedding_model, youtube_tool)
+
+
     name: str = "note_manager"
     description: str = (
         "Searches and summarizes top relevant note from YouTube or stored data."
