@@ -54,7 +54,7 @@ git clone [https://github.com/yourusername/agentpro.git](https://github.com/SidW
 cd Traversaal-x-Optimized-AI-Hackathon
 ```
 
-2. Create Virtual Environment & Install Dependencies:
+2. Create a Virtual Environment & Install Dependencies:
 
 ```bash
 python -m venv venv
@@ -91,20 +91,35 @@ python main.py
 
 This starts an interactive session with the agent where you can enter queries.
 
-### Basic Usage
+## Basic Usage
 
 ```python
-from agentpro import AgentPro, ares_tool, code_tool, youtube_tool
-agent = AgentPro(tools=[ares_tool, code_tool, youtube_tool])
-
-# Run a query
-response = agent("Generate a summary on the latest AI advancements")
-print(response)
+plan deep learning
 ```
 
-## 🌍 Traversaal x Optimized AI Hackathon 2025
+## 🧩 Architecture Diagram
+```mermaid
+graph TD
+  A[User Input] --> B[Teacher Agent Tool]
+  B --> C1[Learning Plan via ares_tool]
+  B --> C2[YouTube Recommendations via youtube_tool]
+  B --> C3[Summarization via ares_tool + slide_tool]
+  
+  B -->|Delegates to| SubAgent[Sub-Agent (AgentPro)]
+  
+  D[Note Manager Tool] -->|Query| F[FAISS Vector DB]
+  F -->|Return Top Note| D
+  D --> G[Summarize with ares_tool]
 
-We’re teaming up with the **Optimized AI Conference 2025** to host a **global hackathon on AI Agents** — open to all developers, builders, researchers, and dreamers working on intelligent systems.
+  D -->|Ingest from YT| YT[youtube_tool]
+  YT -->|Transcripts| F
+
+  style A fill:#f0f8ff,stroke:#000
+  style B fill:#fdd,stroke:#000
+  style D fill:#ffd,stroke:#000
+  style SubAgent fill:#dfd,stroke:#000
+  style F fill:#dff,stroke:#000
+```
 
 ### The Challenge
 
