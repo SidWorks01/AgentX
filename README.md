@@ -120,22 +120,22 @@ graph TD
 Traversaal-x-Optimized-AI-Hackathon/
 ├── agentpro/
 │   ├── __init__.py
-│   ├── agent.py              # Main agent implementation
+│   ├── agent.py                  # Main agent implementation
 │   ├── tools/
 │   │   ├── __init__.py
-│   │   ├── base.py           # Base tool classes
-│   │   ├── ares_tool.py      # Internet search
-│   │   ├── code_tool.py      # Code generation
-│   │   ├── youtube_tool.py   # YouTube analysis
-│   │   ├── slide_tool.py     # Presentation generation
-│   │   ├── planner_tool.py     # Plan learning
+│   │   ├── base.py               # Base tool classes
+│   │   ├── ares_tool.py          # Internet search
+│   │   ├── code_tool.py          # Code generation
+│   │   ├── youtube_tool.py       # YouTube analysis
+│   │   ├── slide_tool.py         # Presentation generation
+│   │   ├── planner_tool.py       # Plan learning
 |   |   └── note_manager_tool.py  #Manage Notes
 │   └── examples/
 │       ├── __init__.py
-│       └── example_usage.py  # Usage examples
-├── main.py                   # CLI entry point
-├── requirements.txt          # Dependencies
-└── .env                      # API keys (create this file)
+│       └── example_usage.py      # Usage examples
+├── main.py                       # CLI entry point
+├── requirements.txt              # Dependencies
+└── .env                          # API keys (create this file)
 ```
 
 ## Requirements
