@@ -1,9 +1,10 @@
+import json
+import re
+import os
 from pptx import Presentation
 from pptx.util import Pt
 from typing import List, Dict, Union
-import json
 from .base import Tool
-
 
 class SlideGenerationTool(Tool):
     name: str = "slide_generation_tool"
@@ -18,6 +19,7 @@ class SlideGenerationTool(Tool):
 
     def run(self, slide_content: Union[str, List[Dict[str, str]]]) -> dict:
         print(f"📥 Slide Generation Tool received input of type: {type(slide_content)}")
+        print("🛠️ Processing slide content...")
 
         # If input is string, try to parse as JSON
         if isinstance(slide_content, str):
@@ -31,7 +33,6 @@ class SlideGenerationTool(Tool):
                     "raw_input": slide_content
                 }
 
-        # Validate it's a list of dicts
         if not isinstance(slide_content, list) or not all(isinstance(slide, dict) for slide in slide_content):
             return {
                 "error": "❌ Input must be a list of dictionaries with 'slide_title' and 'content'.",
@@ -39,7 +40,6 @@ class SlideGenerationTool(Tool):
                 "raw_input": slide_content
             }
 
-        # Check keys in each slide
         for i, slide in enumerate(slide_content):
             if "slide_title" not in slide or "content" not in slide:
                 return {
@@ -47,21 +47,18 @@ class SlideGenerationTool(Tool):
                     "slide_data": slide
                 }
 
-        # Create presentation
         presentation = Presentation()
         for i, slide in enumerate(slide_content):
-            slide_layout = presentation.slide_layouts[1]  # Title + Content layout
+            slide_layout = presentation.slide_layouts[1]
             ppt_slide = presentation.slides.add_slide(slide_layout)
 
-            # Title
             title_shape = ppt_slide.shapes.title
             title_shape.text = slide["slide_title"]
             title_shape.text_frame.paragraphs[0].font.size = Pt(32)
 
-            # Content
             body_shape = ppt_slide.placeholders[1]
             tf = body_shape.text_frame
-            tf.clear()  # Start with a clean text frame
+            tf.clear()
 
             content_lines = slide["content"].split("\n")
             for j, line in enumerate(content_lines):
@@ -73,9 +70,9 @@ class SlideGenerationTool(Tool):
                 p.level = 0
                 p.font.size = Pt(20)
 
-        # Save output
-        output_path = "Output.pptx"
+
         presentation.save(output_path)
+        print("Saved to ", output_path)
 
         return {
             "message": "✅ Slide deck created successfully!",
