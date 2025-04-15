@@ -104,21 +104,14 @@ graph TD
   B --> C1[Learning Plan via ares_tool]
   B --> C2[YouTube Recommendations via youtube_tool]
   B --> C3[Summarization via ares_tool + slide_tool]
-  
-  B -->|Delegates to| SubAgent[Sub-Agent (AgentPro)]
+  B --> SubAgent[Delegates to Sub-Agent (AgentPro)]
   
   D[Note Manager Tool] -->|Query| F[FAISS Vector DB]
-  F -->|Return Top Note| D
+  F -->|Top Note| D
   D --> G[Summarize with ares_tool]
 
   D -->|Ingest from YT| YT[youtube_tool]
-  YT -->|Transcripts| F
-
-  style A fill:#f0f8ff,stroke:#000
-  style B fill:#fdd,stroke:#000
-  style D fill:#ffd,stroke:#000
-  style SubAgent fill:#dfd,stroke:#000
-  style F fill:#dff,stroke:#000
+  YT -->|Transcript| F
 ```
 
 ### The Challenge
