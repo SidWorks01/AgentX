@@ -74,7 +74,7 @@ class SlideGenerationTool(Tool):
                 p.font.size = Pt(20)
 
         # Save output
-        output_path = "Investor_Agent_Presentation.pptx"
+        output_path = "Output.pptx"
         presentation.save(output_path)
 
         return {
