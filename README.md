@@ -68,14 +68,12 @@ You will need API keys for:
   - Traversaal API key for ares_tool
 
   Create a `.env` file in the root directory with your API keys:
-
   For OpenRouter:
   ```
-  TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
-  OPENROUTER_API_KEY=your_openrouter_api_key
-  MODEL_NAME=your_choice_of_openrouter_model_id
-  ```
-
+TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
+OPENROUTER_API_KEY=your_openrouter_api_key
+MODEL_NAME=your_choice_of_openrouter_model_id
+```
   For OpenAI:
   ```
   TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
