@@ -45,22 +45,31 @@ Utilize different models from the OpenRouter platform or default to OpenAI model
 
 ## Quick Start
 
-### Installation
+### 🚀 Installation
 
-Clone the repository and install the required packages:
+1. Clone the repository and install the required packages:
 
 ```bash
-git clone https://github.com/yourusername/agentpro.git
-cd agentpro
+git clone [https://github.com/yourusername/agentpro.git](https://github.com/SidWorks01/Traversaal-x-Optimized-AI-Hackathon.git)
+cd Traversaal-x-Optimized-AI-Hackathon
+```
+
+2. Create Virtual Environment & Install Dependencies:
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### Configuration
-
-For Openrouter:
+3. Configuration
+You will need API keys for:
+  - OpenRouter or OpenAI
+  - Traversaal API key for ares_tool
 
 Create a `.env` file in the root directory with your API keys:
 
+For OpenRouter:
 ```
 TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
 OPENROUTER_API_KEY=your_openrouter_api_key
@@ -68,14 +77,12 @@ MODEL_NAME=your_choice_of_openrouter_model_id
 ```
 
 For OpenAI:
-
-Create a `.env` file in the root directory with your API keys:
-
 ```
 TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
 OPENAI_API_KEY=your_openai_api_key
 MODEL_NAME=your_choice_of_openai_model_id
 ```
+
 ### Running the Agent
 
 From the command line:
